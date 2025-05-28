@@ -9,6 +9,7 @@ import jakarta.ws.rs.Produces;
 import org.eclipse.microprofile.reactive.messaging.Channel;
 import org.eclipse.microprofile.reactive.messaging.Emitter;
 import org.eclipse.microprofile.reactive.messaging.Incoming;
+import org.eclipse.microprofile.reactive.messaging.Outgoing;
 import org.eclipse.microprofile.rest.client.inject.RestClient;
 
 import java.nio.charset.StandardCharsets;
@@ -24,7 +25,8 @@ public class EmailService {
     EmailInterface emailInterface;
 
     @Incoming("email")
-    public void sendRegistrationConfirmationEmail(byte[] payload) {
+    @Outgoing("code")
+    public String sendRegistrationConfirmationEmail(byte[] payload) {
         String raw = new String(payload, StandardCharsets.UTF_8);
         System.out.println("Received email for confirmation: " + raw);
         Email emailEntity = new Email();
@@ -33,9 +35,10 @@ public class EmailService {
         emailEntity.setMessage("Thank you for registering with us! Please confirm your email address. With the code down below.");
         emailEntity.setSubject("Registration Confirmation");
         emailEntity.setSentAt(LocalDateTime.now());
-        emailEntity.setCode(String.valueOf(Math.random() * 100000));
+        emailEntity.setCode(String.valueOf(Math.round(Math.random() * 100000)));
         emailInterface.sendRegistrationConfirmationEmail(emailEntity);
         Email.persist(emailEntity);
+        return emailEntity.getCode();
     }
 
 }
