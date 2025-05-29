@@ -1,23 +1,23 @@
 package com.mullen.domain;
 
-import io.quarkus.mongodb.panache.PanacheMongoEntityBase;
-import io.quarkus.mongodb.panache.common.MongoEntity;
-import org.bson.codecs.pojo.annotations.BsonId;
+import io.quarkus.hibernate.orm.panache.PanacheEntityBase;
+import jakarta.persistence.*;
 
 import java.time.LocalDateTime;
 
-@MongoEntity(database = "technova-ms-email", collection = "emails")
-public class Email extends PanacheMongoEntityBase {
-    @BsonId
+@Entity
+public class Email extends PanacheEntityBase {
+    @Id
+    @GeneratedValue(strategy = GenerationType.UUID)
     public String id;
 
-    public String emailType;
+    @Enumerated(EnumType.STRING)
+    public EmailType emailType;
 
+    @Column(name = "recipient", nullable = false)
     public String to;
 
     public String subject;
-
-    public String message;
 
     public String sentFrom;
 
@@ -33,11 +33,11 @@ public class Email extends PanacheMongoEntityBase {
         this.id = id;
     }
 
-    public String getEmailType() {
+    public EmailType getEmailType() {
         return emailType;
     }
 
-    public void setEmailType(String emailType) {
+    public void setEmailType(EmailType emailType) {
         this.emailType = emailType;
     }
 
@@ -55,14 +55,6 @@ public class Email extends PanacheMongoEntityBase {
 
     public void setSubject(String subject) {
         this.subject = subject;
-    }
-
-    public String getMessage() {
-        return message;
-    }
-
-    public void setMessage(String message) {
-        this.message = message;
     }
 
     public String getSentFrom() {
@@ -92,12 +84,11 @@ public class Email extends PanacheMongoEntityBase {
     public Email() {
     }
 
-    public Email(String id, String emailType, String to, String subject, String message, String sentFrom, String code, LocalDateTime sentAt) {
+    public Email(String id, EmailType emailType, String to, String subject, String sentFrom, String code, LocalDateTime sentAt) {
         this.id = id;
         this.emailType = emailType;
         this.to = to;
         this.subject = subject;
-        this.message = message;
         this.sentFrom = sentFrom;
         this.code = code;
         this.sentAt = sentAt;
