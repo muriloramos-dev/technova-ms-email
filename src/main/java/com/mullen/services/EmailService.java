@@ -6,8 +6,6 @@ import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 import jakarta.ws.rs.Consumes;
 import jakarta.ws.rs.Produces;
-import org.eclipse.microprofile.reactive.messaging.Channel;
-import org.eclipse.microprofile.reactive.messaging.Emitter;
 import org.eclipse.microprofile.reactive.messaging.Incoming;
 import org.eclipse.microprofile.reactive.messaging.Outgoing;
 import org.eclipse.microprofile.rest.client.inject.RestClient;
@@ -32,7 +30,7 @@ public class EmailService {
         Email emailEntity = new Email();
         emailEntity.setEmailType("registration-confirmation");
         emailEntity.setTo(raw);
-        emailEntity.setMessage("Thank you for registering with us! Please confirm your email address. With the code down below.");
+        emailEntity.setMessage("Thank you for registering with us! Please confirm your email address with the code down below.");
         emailEntity.setSubject("Registration Confirmation");
         emailEntity.setSentAt(LocalDateTime.now());
         emailEntity.setCode(String.valueOf(Math.round(Math.random() * 100000)));
