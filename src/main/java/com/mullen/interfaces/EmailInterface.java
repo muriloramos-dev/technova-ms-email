@@ -3,7 +3,6 @@ package com.mullen.interfaces;
 import com.mullen.domain.Email;
 import jakarta.ws.rs.Consumes;
 import jakarta.ws.rs.POST;
-import jakarta.ws.rs.Path;
 import jakarta.ws.rs.Produces;
 import org.eclipse.microprofile.rest.client.inject.RegisterRestClient;
 
@@ -13,6 +12,5 @@ import org.eclipse.microprofile.rest.client.inject.RegisterRestClient;
 public interface EmailInterface {
 
     @POST
-    @Path("/webhook/confirm/registration")
-    void sendRegistrationConfirmationEmail(Email email);
+    void sendEmail(Email email);
 }

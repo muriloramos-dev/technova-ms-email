@@ -21,6 +21,8 @@ public class Email extends PanacheEntityBase {
 
     public String sentFrom;
 
+    public String message;
+
     public String code;
 
     public LocalDateTime sentAt;
@@ -79,6 +81,14 @@ public class Email extends PanacheEntityBase {
 
     public void setSentAt(LocalDateTime sentAt) {
         this.sentAt = sentAt;
+    }
+
+    public String getMessage() {
+        return message;
+    }
+
+    public void setMessage(String message) {
+        this.message = message;
     }
 
     public Email() {

@@ -4,7 +4,8 @@ public enum EmailType {
     CONFIRMATION("confirmation"),
     RESET_PASSWORD("reset_password"),
     WELCOME("welcome"),
-    NOTIFICATION("notification");
+    NOTIFICATION("notification"),
+    PRODUCT("product");
 
     private final String type;
 

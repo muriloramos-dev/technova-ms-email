@@ -29,15 +29,29 @@ public class EmailService {
     @Transactional
     public String sendRegistrationConfirmationEmail(byte[] payload) {
         String raw = new String(payload, StandardCharsets.UTF_8);
-        System.out.println("Received email for confirmation: " + raw);
         Email emailEntity = new Email();
         emailEntity.setEmailType(EmailType.CONFIRMATION);
         emailEntity.setTo(raw);
         emailEntity.setSubject("Registration Confirmation");
         emailEntity.setSentAt(LocalDateTime.now());
+        emailEntity.setMessage("Thank you for registering with us! Please confirm your email address with the code down below.");
         emailEntity.setCode(String.valueOf(Math.round(Math.random() * 100000)));
-        emailInterface.sendRegistrationConfirmationEmail(emailEntity);
+        emailInterface.sendEmail(emailEntity);
         Email.persist(emailEntity);
         return emailEntity.getCode();
+    }
+
+    @Incoming("createProduct")
+    @Transactional
+    public void sendProductCreationNotification(byte[] payload) {
+        String raw = new String(payload, StandardCharsets.UTF_8);
+        Email emailEntity = new Email();
+        emailEntity.setEmailType(EmailType.PRODUCT);
+        emailEntity.setTo(raw);
+        emailEntity.setSubject("Product Created");
+        emailEntity.setMessage("Your product has been created.");
+        emailEntity.setSentAt(LocalDateTime.now());
+        emailInterface.sendEmail(emailEntity);
+        Email.persist(emailEntity);
     }
 }
