@@ -33,8 +33,7 @@ def POD_LABEL = 'kaniko'
                                         --values charts/email/values.yaml \
                                         --namespace technova \
                                         --set email.image.tag=${env.BUILD_ID} \
-                                        --wait \
-                                        --atomic
+                                        --wait
                                         """
                                 }
                         }
